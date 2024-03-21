@@ -15,6 +15,9 @@ router.get('/', async (req, res) => {
    }
 });
 
+/******************** Esto es con la base de Firebase Realtime Database ********************/
+
+// Crear un nuevo usuario
 router.post('/testeo', async (req, res) => {
    console.log(req.body);
    const newTest = {
@@ -25,6 +28,7 @@ router.post('/testeo', async (req, res) => {
    res.send('received');
 });
 
+// Consultar todos los usuarios
 router.get('/consulta2', async (req, res) => {
    db_realtime.ref('test').once('value', (snapshot) => {
       const data = snapshot.val();
@@ -33,6 +37,9 @@ router.get('/consulta2', async (req, res) => {
    })
 });
 
+/******************** Esto es con la base de Firebase Cloud Firestore ********************/
+
+// Consultar todos los usuarios
 router.get('/consulta', async (req, res) => {
    try {
       const testCollectionRef = collection(db, 'test');
@@ -55,6 +62,7 @@ router.get('/consulta', async (req, res) => {
    }
 });
 
+// Crear un nuevo usuario
 router.post('/users', async (req, res) => {
    const newUser = {
       name: req.body.name,
@@ -69,6 +77,7 @@ router.post('/users', async (req, res) => {
    res.send(`Test: ${docRef.id}`)
 });
 
+// Editar un usuario
 router.put('/editar/:id', async (req, res) => {
    try {
       const usersCollectionRef = collection(db, 'test');
@@ -90,6 +99,7 @@ router.put('/editar/:id', async (req, res) => {
    }
 });
 
+// Eliminar un usuario
 router.delete('/eliminar/:id', async (req, res) => {
    try {
       const usersCollectionRef = collection(db, 'test');
