@@ -15,7 +15,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 const puerto = config.PUERTO;
-const mensajeArranque = `${new Date()}🚀 Servidor Discoria iniciado | Puerto: ${puerto}`;
+const mensajeArranque = `${new Date()}🚀 Servidor TriviaTrek iniciado | Puerto: ${puerto}`;
 
 let server;
 let tipoConexion = '';
