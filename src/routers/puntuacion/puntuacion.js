@@ -74,15 +74,24 @@ router.post("/agregarPuntuacion", async (req, res) => {
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       // Si el documento ya existe, enviar un mensaje de error
-      res.status(400).send({
-        message: "Un documento con este uid ya existe",
-        status: false,
-      });
+      const docRefUpdate = doc(puntuacionCollectionRef, newPuntuacion.uid);
+
+      const updatedData = {
+        score: newPuntuacion.score,
+      };
+
+      await updateDoc(docRefUpdate, updatedData);
+
+      res
+        .status(400)
+        .send(
+          "Un documento con este uid ya existe y la puntuacion se actualizo correctamente"
+        );
     } else {
       // Si el documento no existe, insertarlo
       await setDoc(docRef, newPuntuacion);
       console.log("Documento insertado con ID:", docRef.id);
-      res.send({ message: `Puntuacion: ${docRef.id}`, status: true });
+      res.send(`Puntuacion agregada: ${docRef.id}`);
     }
   } catch (error) {
     console.log("Error en la ruta de puntuacion: ", error);
